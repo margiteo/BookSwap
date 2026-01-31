@@ -1,0 +1,108 @@
+:root{
+    --pink-1:#fde6f1;
+    --pink-2:#f7c3dd;
+    --accent:#c85a7a;
+    --accent-2:#d83a86;
+    --text:#3a2b2f;
+}
+
+*{ box-sizing:border-box; }
+body{
+    margin:0;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    color:var(--text);
+}
+
+.page{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: radial-gradient(circle at 30% 20%, white 0%, var(--pink-1) 40%, var(--pink-2) 100%);
+    padding:40px 16px;
+}
+
+.card{
+    width:min(520px, 92vw);
+    background: rgba(255,255,255,0.9);
+    border-radius: 18px;
+    padding: 46px 44px;
+    box-shadow: 0 18px 45px rgba(0,0,0,0.18);
+    border: 1px solid rgba(255,255,255,0.55);
+}
+
+.brand{
+    font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
+    font-size: 44px;
+    font-weight: 700;
+    color: var(--accent);
+    text-align:center;
+    margin: 0 0 26px 0;
+    letter-spacing: 0.5px;
+}
+
+.label{
+    display:block;
+    font-size: 13px;
+    margin: 14px 0 6px;
+    opacity: 0.85;
+}
+
+.input{
+    width:100%;
+    padding: 14px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.18);
+    outline:none;
+    font-size: 14px;
+    background:white;
+}
+
+.input:focus{
+    border-color: rgba(216,58,134,0.65);
+    box-shadow: 0 0 0 4px rgba(216,58,134,0.15);
+}
+
+.forgot{
+    display:block;
+    text-align:right;
+    margin-top:10px;
+    font-size: 13px;
+    color: var(--accent-2);
+    text-decoration:none;
+}
+
+.btn{
+    margin-top: 18px;
+    width:100%;
+    padding: 14px 16px;
+    border:0;
+    border-radius: 12px;
+    background: var(--accent);
+    color:white;
+    font-weight: 700;
+    cursor:pointer;
+    font-size: 15px;
+}
+
+.btn:hover{
+    filter: brightness(0.95);
+}
+
+.registerRow{
+    margin-top: 18px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.registerLink{
+    color: var(--accent);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.registerLink:hover{
+    text-decoration: underline;
+}
