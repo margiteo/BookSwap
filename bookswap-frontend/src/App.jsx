@@ -1,24 +1,50 @@
+import { useEffect, useState } from "react";
+import Login from "./pages/Login";
+import PinkShell from "./components/PinkShell";
+import Header from "./components/Header";
+import { login, me } from "./api/auth";
+
+import UserDashboard from "./pages/UserDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+
 export default function App() {
-    return (
-        <div className="page">
-            <div className="card">
-                <h1 className="brand">Book Swap</h1>
+  const [session, setSession] = useState(() => {
+    const raw = localStorage.getItem("bookswap_session");
+    return raw ? JSON.parse(raw) : null; // {id,email,is_admin}
+  });
 
-                <label className="label">Email Address</label>
-                <input className="input" placeholder="Email" />
+  useEffect(() => {
+    if (session) localStorage.setItem("bookswap_session", JSON.stringify(session));
+    else localStorage.removeItem("bookswap_session");
+  }, [session]);
 
-                <label className="label">Password</label>
-                <input className="input" placeholder="Password" type="password" />
+  async function handleLogin(email, password) {
+    const u = await login(email, password); // {id,email}
+    const meta = await me(u.id); // {is_admin,is_active,...}
 
-                <a className="forgot" href="#">Forget password?</a>
+    if (!meta.is_active) {
+      throw { response: { data: { detail: "Account deactivated" } } };
+    }
 
-                <button className="btn">Log in</button>
-                <div className="registerRow">
-                    <span>Nu ai cont?</span>
-                    <a className="registerLink" href="#">Creează cont</a>
-                </div>
+    setSession({ id: u.id, email: u.email, is_admin: !!meta.is_admin });
+  }
 
-            </div>
-        </div>
-    );
+  function handleLogout() {
+    setSession(null);
+  }
+
+  if (!session) return <Login onLogin={handleLogin} />;
+
+  return (
+    <PinkShell>
+      <Header session={session} onLogout={handleLogout} />
+      <div className="mt-8">
+        {session.is_admin ? (
+          <AdminDashboard session={session} />
+        ) : (
+          <UserDashboard session={session} />
+        )}
+      </div>
+    </PinkShell>
+  );
 }
